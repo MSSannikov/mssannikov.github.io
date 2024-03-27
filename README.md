@@ -6,9 +6,12 @@ I am a passionate Data Scientist with a keen interest in extracting meaningful i
 
 ## Table of Contents
 
-- **Project 1:** Customer curn analysis of Telco data
-- **Project 2:** Emploees preferences change before and after pandemic
-- **Letters of Recommendation**
+- **Customer churn analysis of Telco data:** A Python project analyzing customer churn rates for a telecommunications company to identify patterns and reasons behind customers leaving their service.
+- **Predictive Maintenance for Machines:**  Another Python project focused on using machine learning or statistical models to predict when maintenance should be performed on machinery to prevent unexpected failures.
+- **Life-Income Analysis in States:** Project done on R-language, Statistical analysis comparing life expectancy and income levels across different states or regions.
+- **Lottery system database:** A project involving SQL of creation of a database system for managing a lottery system, including user data, transactions, and lottery draws.
+- **Research of job Market** Research about Shift in the job reviews of employees in the wake of COVID-19: Evidence from the U.S. Market. Project done together with my classmates.
+- **Letters of Recommendation** A collection of written recommendations
 - [Contact](#contact)
 
 ## Contact
