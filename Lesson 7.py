@@ -63,7 +63,7 @@ def newRows():
 
 def deletedRows():
     cursor.execute('''
-    CREATE TABLE tmp_deleted_new_rows as 
+    CREATE TABLE tmp_deleted_rows as 
                    select 
                         t1.*
                    from hist_auto as t1
@@ -74,7 +74,7 @@ def deletedRows():
 
 def changedRows():
     cursor.execute('''
-    CREATE TABLE tmp_changed_new_rows as 
+    CREATE TABLE tmp_changed_rows as 
                    select 
                         t1.*
                    from tmp_auto  as t1
@@ -96,22 +96,138 @@ def changedRows():
 def delete_temp_tables():
     cursor.execute('DROP TABLE if exists tmp_auto')
     cursor.execute('DROP TABLE if exists tmp_new_rows')
-    cursor.execute('DROP TABLE if exists tmp_changed_new_rows')
-    cursor.execute('DROP TABLE if exists tmp_deleted_new_rows')
+    cursor.execute('DROP TABLE if exists tmp_changed_rows')
+    cursor.execute('DROP TABLE if exists tmp_deleted_rows')
+
+def change_hist_auto():
+    cursor.execute('''
+        INSERT INTO hist_auto(
+                   model,
+                   transmission,
+                   body_type,
+                   drive_type,
+                   color,
+                   production_year,
+                   auto_key,
+                   engine_capacity,
+                   horsepower,
+                   engine_type,
+                   price,
+                   milage  
+                    )
+        SELECT 
+                   model,
+                   transmission,
+                   body_type,
+                   drive_type ,
+                   color ,
+                   production_year ,
+                   auto_key ,
+                   engine_capacity,
+                   horsepower ,
+                   engine_type,
+                   price ,
+                   milage
+        FROM tmp_new_rows
+                    ''')
+    
+
+    cursor.execute('''
+        UPDATE hist_auto
+        SET end_dttm = datetime('now', '-1 second')
+        WHERE auto_key IN (SELECT auto_key
+                        FROM tmp_changed_rows)
+                   ''')
+    
+    cursor.execute('''
+        INSERT INTO hist_auto(
+                   model,
+                   transmission,
+                   body_type,
+                   drive_type ,
+                   color,
+                   production_year,
+                   auto_key,
+                   engine_capacity,
+                   horsepower,
+                   engine_type,
+                   price,
+                   milage  
+                    )
+        SELECT 
+                   model,
+                   transmission,
+                   body_type,
+                   drive_type,
+                   color,
+                   production_year,
+                   auto_key,
+                   engine_capacity,
+                   horsepower,
+                   engine_type,
+                   price,
+                   milage
+        FROM   tmp_changed_rows
+                    ''')
+
+    cursor.execute('''
+        UPDATE hist_auto
+        SET end_dttm = datetime('now', '-1 second')
+        WHERE auto_key IN (SELECT auto_key
+                        FROM tmp_deleted_rows)
+                   ''')
+
+    cursor.execute('''
+        INSERT INTO hist_auto(
+                   model,
+                   transmission,
+                   body_type,
+                   drive_type ,
+                   color ,
+                   production_year ,
+                   auto_key ,
+                   engine_capacity,
+                   horsepower ,
+                   engine_type,
+                   price ,
+                   milage ,
+                   deleted_flg 
+                    )
+        SELECT 
+                   model,
+                   transmission,
+                   body_type,
+                   drive_type ,
+                   color ,
+                   production_year ,
+                   auto_key ,
+                   engine_capacity,
+                   horsepower ,
+                   engine_type,
+                   price ,
+                   milage,
+                   1
+        FROM   tmp_deleted_rows
+                    ''')
 
 
+delete_temp_tables()
+init()
+csv2sql('Data Engenireeng/store/data_1.csv', 'tmp_auto')
+changedRows()
+newRows()
+deletedRows()
+change_hist_auto()
 
-#delete_temp_tables()
-#init()
-#csv2sql('Data Engenireeng/store/data_1.csv', 'tmp_auto')
-#changedRows()
-#newRows()
-#deletedRows()
-
+change_hist_auto()
 showtable('tmp_auto')
 showtable('tmp_new_rows')
-showtable('tmp_changed_new_rows')
-showtable('tmp_deleted_new_rows')
+showtable('tmp_changed_rows')
+showtable('tmp_deleted_rows')
+showtable('tmp_deleted_rows')
+showtable('hist_auto')
+
+
 
 
 
