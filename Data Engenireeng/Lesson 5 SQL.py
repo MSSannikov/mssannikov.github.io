@@ -1,7 +1,7 @@
 import sqlite3 as sql
 
-conn = sql.connect("Databasa.db")
-cursor = conn.cursor()
+conn = sql.connect("Databasa.db") #подключаемся к бд
+cursor = conn.cursor() #курсор это обект через который мы моежм взимодействовать с бд 
 
 #cursor.execute('''
 #CREATE TABLE users (
