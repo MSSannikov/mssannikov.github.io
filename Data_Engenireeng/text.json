@@ -1,0 +1,9 @@
+{
+  "Users": [
+    { "id": 1, "name": "Anna Rossi", "email": "anna.rossi@example.com", "role": "Recruiter" },
+    { "id": 2, "name": "Luca Bianchi", "email": "luca.bianchi@example.com", "role": "Candidate" },
+    { "id": 3, "name": "Marta Verdi", "email": "marta.verdi@example.com", "role": "HR Manager" },
+    { "id": 4, "name": "Giovanni Neri", "email": "giovanni.neri@example.com", "role": "Candidate" },
+    { "id": 5, "name": "Elena Russo", "email": "elena.russo@example.com", "role": "Data Analyst" }
+  ]
+}
